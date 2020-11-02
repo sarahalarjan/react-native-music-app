@@ -5,7 +5,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import colors from '../assets/colors'
 
 import HomeScreen from "../screens/home";
-
+import LandingScreen from "../screens/landing"
 import ArtistsScreen from "../screens/artists";
 import AlbumsScreen from "../screens/albums";
 
@@ -71,7 +71,7 @@ const Tabs = createMaterialTopTabNavigator(
         paddingTop: 3,
       },
       indicatorStyle: {
-        backgroundColor: '#fff',
+        backgroundColor: colors.ceamoPink,
         elevation: 10,
       },
     },
@@ -102,7 +102,26 @@ const Stack = createStackNavigator(
         },
       },
 
+    },
+    lyrics:{
+      screen:LandingScreen,
+      navigationOptions: ({ navigation ,item }) => ({
+        tabBarLabel: ({ tintColor }) => (
+          <View style={styles.iconCOntainer}>
+            <Text style={{ color: 'white', backgroundColor: colors.ceamoPink, }}>Lyrics</Text>
+          </View>
+        ),
+
+      }),
+      headerStyle: {
+        backgroundColor: colors.ceamoPink,
+        height: 40,
+
+
+      },
+
     }
+
   }
 );
 const styles = StyleSheet.create({
@@ -110,6 +129,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
+    backgroundColor: colors.ceamoPink,
   },
 });
 

@@ -24,6 +24,31 @@ export default class ArtistsProvider {
       throw error;
     }
   }
+  async getAlbumTracks(id_artist,id_album) {
+    try {
+      var url=await new Urls().Artists_URL()+"/"+id_artist+"/albums"+"/"+id_album+"/tracks?"
+      var response=await new Requests().get(url)
+     
+      return response.data.result;
+
+     
+    } catch (error) {
+      throw error;
+    }
+  }
+  async getTrackLyrics(id_artist,id_album,id_track) {
+    try {
+      var url=await new Urls().Artists_URL()+"/"+id_artist+"/albums"+"/"+id_album+"/tracks"+"/"+id_track+"/lyrics"
+      var response=await new Requests().get(url)
+     console.log(response)
+      return response.data.result;
+
+     
+    } catch (error) {
+      throw error;
+    }
+  }
+
 
   async search(q) {
     try {

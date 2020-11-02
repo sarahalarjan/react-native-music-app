@@ -13,7 +13,7 @@ import {
 import colors from '../assets/colors'
 
 
-const SearchItems = ({ results }) => (
+const SearchItems = ({ results  , navigation}) => (
 
   
      <FlatList
@@ -22,9 +22,9 @@ const SearchItems = ({ results }) => (
       data={results}
       styles={{ alignSelf: 'stretch', width:'100%',}}
       renderItem={({ item }) => (
-        <View
+        <TouchableOpacity
           style={styles.suggestionItem}  
-            
+            onPress={()=>{item.haslyrics?navigation.navigate('lyrics',{item}):alert('no lyrics ')}}
         >
           <Image
             style={styles.image}
@@ -41,10 +41,13 @@ const SearchItems = ({ results }) => (
             <Text numberOfLines={1} style={styles.artistDetails}>
               {'Album: '+item.album}
             </Text> 
+            <Text numberOfLines={1} style={styles.artistDetails}>
+              {'label: '+item.label?(item.label):'not listed'}
+            </Text> 
             
           </View>
          
-        </View>
+        </TouchableOpacity>
       )}
       keyExtractor={(item, index) => index.toString()}
     /> 
@@ -53,7 +56,8 @@ export default SearchItems
 const styles = StyleSheet.create({
   suggestionItem: {
     flex: 1,
-    flexDirection: 'row', 
+    flexDirection: 'row',
+ //   width:'100%',
     flexWrap: 'nowrap',
     backgroundColor: colors.OrchidPink,
     elevation: 1,
@@ -64,7 +68,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginTop: 0,
     marginBottom: 10,
-    borderRadius:10
+    borderRadius:10,
+    borderColor:colors.pastalPink,
+    borderWidth:1
   },
   image: {
     width: 60,
@@ -73,7 +79,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderColor: colors.pastalPink,
     borderWidth:4,
-    marginRight: 17,
+    marginRight: 10,
     flex: 0
   },
   detailsContainer: {
@@ -82,9 +88,8 @@ const styles = StyleSheet.create({
   },
  
   artistDetails: {
-      color: 'white',
-    paddingBottom: 2,
-    width: '100%',
-  },
+    color:  colors.copperpeny,
+    paddingBottom: 2
+  }
    
 });

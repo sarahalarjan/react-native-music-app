@@ -13,7 +13,7 @@ import {
 import colors from '../assets/colors'
 
 
-const AlbumsItems = ({ results }) => (
+const AlbumsItems = ({ results ,navigation}) => (
 
   
      <FlatList
@@ -22,16 +22,16 @@ const AlbumsItems = ({ results }) => (
       data={results}
       styles={{ alignSelf: 'stretch', width:'100%',}}
       renderItem={({ item }) => (
-        <View
+        <TouchableOpacity
           style={styles.suggestionItem}  
-       
+       onPress={()=>navigation.navigate('Tracks',{item})}
         >
           <Image
             style={styles.image}
-            source={{ uri: item.img}}
+            source={{ uri: item.cover}}
           />
           <View numberOfLines={1} style={styles.detailsContainer}>
-            <Text numberOfLines={1} style={styles.songTitle}>
+            <Text numberOfLines={1} style={styles.artistDetails}>
               {item.name}
             </Text>
             <Text numberOfLines={1} style={styles.artistDetails}>
@@ -40,7 +40,7 @@ const AlbumsItems = ({ results }) => (
             
           </View>
          
-        </View>
+        </TouchableOpacity>
       )}
       keyExtractor={(item, index) => index.toString()}
     /> 
@@ -61,7 +61,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginTop: 0,
     marginBottom: 10,
-    borderRadius:10
+    borderRadius:10,
+    borderColor:colors.pastalPink,
+    borderWidth:1
   },
   image: {
     width: 60,
@@ -77,13 +79,10 @@ const styles = StyleSheet.create({
     width: '100%',
     marginRight: 20
   },
-  songTitle: {
-    color: 'white',
-    paddingBottom: 2
-  },
+ 
   artistDetails: {
-      color: 'white',
+    color:  colors.copperpeny,
     paddingBottom: 2
-  },
+  }
   
 });

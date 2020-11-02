@@ -14,6 +14,26 @@ class TracksScreen extends React.Component {
         this.state = { results: [], text: '', showAlbum: false, album: {} };
 
     }
+    async UNSAFE_componentWillReceiveProps(nextProps) {
+        try {
+
+console.log(nextProps.navigation.state.params.item.id_album,nextProps.navigation.state.params.item.id_artist)
+//console.log()
+            if (nextProps.navigation.state.params.item) {
+                var artistID = nextProps.navigation.state.params.item.id_artist
+                var albumID=nextProps.navigation.state.params.item.id_album
+                this.setState({ artistID: artistID, showSearch: false })
+                this.getTracks(artistID,albumID)
+
+            }
+
+
+        } catch (error) {
+            alert(error)
+        }
+
+    }
+
     componentDidUpdate(prevProps, prevState) {
         const { text } = this.state;
         if (text !== prevState.text) {
@@ -27,7 +47,36 @@ class TracksScreen extends React.Component {
         // Keyboard.dismiss();
     };
 
+    getTracks = async (id_artist,id_album) => {
+        try {
+         
+           
+                var response = await new ArtistsProvider().getAlbumTracks(id_artist,id_album)
+                var tracks = response.tracks
+              for (var track of tracks) {
+                  if (track.haslyrics) {
+                    var res = await new ArtistsProvider().getTrackLyrics(id_artist,id_album,track.id_track)
+                    track.lyrics=res.lyrics
+                //    console.log('res',res.lyrics)
+                  }
+                 
+                  track.label=response.label
+                  track.cover=response.cover
+                  track.artist=response.artist
+                  track.album=response.album
+                  track.id_artist=response.id_artist
+                  track.id_album=response.id_album
+              }
+              
+                this.setState({ results: tracks })
 
+            
+
+        } catch (error) {
+            alert(error)
+        }
+
+    };
 
     getInfo = async (query) => {
         try {
@@ -39,6 +88,20 @@ class TracksScreen extends React.Component {
                 var tracks = response
                 if (tracks.length == 0) {
                     alert('No Tracks, Please enter a valid test')
+                }
+                for (var track of tracks) {
+                    if (track.haslyrics) {
+                      var res = await new ArtistsProvider().getTrackLyrics(track.id_artist,track.id_album,track.id_track)
+                      track.lyrics=res.lyrics
+                  //    console.log('res',res.lyrics)
+                    }
+                   
+                    // track.label=response.label
+                    // track.cover=response.cover
+                    // track.artist=response.artist
+                    // track.album=response.album
+                    // track.id_artist=response.id_artist
+                    // track.id_album=response.id_album
                 }
               
                 this.setState({ results: tracks })
@@ -53,9 +116,7 @@ class TracksScreen extends React.Component {
 
     render() {
         const { navigation } = this.props;
-        const {
-            text, results
-        } = this.state;
+      
 
         return (
             <View style={styles.container}>

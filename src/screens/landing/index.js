@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet,StatusBar,TouchableOpacity, } from 'react-native';
-import * as Animatable from 'react-native-animatable';
+import { ScrollView } from 'react-native';
+import colors from '../../assets/colors'
 const zoomIn = {
     0: {
       scale: 0,
@@ -12,40 +13,38 @@ const zoomIn = {
       scale: 1,
     },
   };
-const LandingScreen = ({ navigation }) => {
+const LandingScreen = ({ navigation ,item }) => {
 
     return (
-        <View style={styles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-        <Text style={styles.title}>Landing App</Text>
       
-        {/* <Animatable.Image
-          animation={zoomIn}
-          source={require('../../assets/imgs/splash_screen.png')}
-          style={styles.logo}
-        onAnimationEnd={() =>navigation.navigate('Home')}
+       
+      
         
-        >
-            
-            </Animatable.Image> */}
+        <ScrollView style={styles.container}>
+            <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+        <Text style={styles.title}>{navigation.state.params.item.lyrics}</Text>
+        </ScrollView>
+       
           
        
-      </View>
+      
     );
   };
 
   const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: colors.PalePurplePantone,
+        
+      },
+      title: {
+        fontSize: 22,
+        color: colors.copperpeny,
+        alignSelf:'center',       
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
-      },
-      title: {
-        fontSize: 32,
-        color: '#000',
-        fontWeight: 'bold',
+        textAlign:'center'
       },
       logo: {
         height: '100%',
